@@ -5,15 +5,21 @@ import java.io.*;
 import javax.imageio.*;
 import javax.swing.*;
 
+// import screen.screen.*;
+
 
 public class test {
+    static int wsize = 600;
+    static int hsize = 400;
+
     public static void main(String[] args) throws Exception {
         Rectangle rectangle = getScrSize(); //узнает размер экрана
         prtSize(rectangle);
-        String filename = captureScr2(rectangle, System.currentTimeMillis()+"."+"png");
+        // String filename = captureScr2(rectangle, System.currentTimeMillis()+"."+"png");
+        String filename = captureScr2(rectangle, "screenshot"+"."+"png");
         //captureScr(rectangle);
         System.out.println("Screenshot saved as: " + filename);
-        ImageDemo(filename);
+        ImageDemo(getImgIcon(filename));
     }
 
     static void userInput() { //выводит на экран пользовательский ввод
@@ -63,29 +69,13 @@ public class test {
         return scaledIcon;
     }
 //рисует форму с иконкой картинки, полученной из filename
-    static void ImageDemo(final String filename) throws Exception{
-        JFrame editorFrame = new JFrame("Image Demo");
-        editorFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    static void ImageDemo(ImageIcon icon) throws Exception{
 
-        JLabel jLabel = new JLabel();
-        jLabel.setIcon(getImgIcon(filename));
-        editorFrame.getContentPane().add(jLabel, BorderLayout.CENTER);
+        MyFrame frame = new MyFrame("Testing...", wsize, hsize);
+        frame.setVisible(true);
+        frame.setImage(icon);
+        frame.pack();
 
-        JMenuBar mb = new JMenuBar();
-        JMenu m1 = new JMenu("FILE");
-        JMenu m2 = new JMenu("Help");
-        mb.add(m1);
-        mb.add(m2);
-        JMenuItem m11 = new JMenuItem("Open");
-        JMenuItem m22 = new JMenuItem("Save as");
-        m1.add(m11);
-        m1.add(m22);
-        editorFrame.getContentPane().add(BorderLayout.NORTH, mb);
-
-        editorFrame.pack();
-        editorFrame.setLocationRelativeTo(null);
-        editorFrame.setResizable(false);
-        editorFrame.setVisible(true);
       }
 
 }
